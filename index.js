@@ -1,7 +1,6 @@
 const express = require('express');
 const https = require('https');
 var fs = require('fs');
-// const path = require('path');
 
 const app = express();
 
@@ -9,23 +8,21 @@ const app = express();
 let lessonNum = 1;
 
 // Create target folder
-const dir = './SQL_Intro';
-// const dir = `${__dirname}/asx`
+const dir = './Redis';
 if (!fs.existsSync(dir)) {
   fs.mkdirSync(dir);
 }
 
 // Run download
 function run() {
-  console.log(`Lesson number ${lessonNum} is processing`);
-
+  
   const options = {
-    hostname: 'vs1.coursehunter.net',
+    hostname: 'vs3.coursehunter.net',
     port: 443,
-    path: `/fm-intro-to-sql-live-event/lesson${lessonNum}.webm`,
+    path: `/profit-redis-oipi/lesson${lessonNum}.mp4`,
     method: 'GET',
     headers: {
-      'Content-Type': 'video/webm'
+      'Content-Type': 'video/mp4'
     }
   };
 
@@ -37,7 +34,8 @@ function run() {
       return;
     }
 
-    const writeStream = fs.createWriteStream(`./${dir}/lesson${lessonNum}.webm`);
+    console.log(`Lesson number ${lessonNum} is processing`);
+    const writeStream = fs.createWriteStream(`./${dir}/lesson${lessonNum}.mp4`);
 
     res.on('data', chunk => {
       writeStream.write(chunk);
@@ -55,8 +53,7 @@ function run() {
 
   req.end();
 }
-// console.log('__dirname (the directory of the script file): ', __dirname);
-// console.log(path.join(__dirname + '/foo', 'bar', 'baz/asdf/', 'quux', '..'))
+
 run();
 
 app.listen(3000, () => console.log('Listening 3000'));
