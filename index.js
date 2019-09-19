@@ -8,7 +8,7 @@ const app = express();
 let lessonNum = 1;
 
 // Create target folder
-const dir = './Redis';
+const dir = './Redux Saga';
 if (!fs.existsSync(dir)) {
   fs.mkdirSync(dir);
 }
@@ -17,9 +17,9 @@ if (!fs.existsSync(dir)) {
 function run() {
   
   const options = {
-    hostname: 'vs3.coursehunter.net',
+    hostname: 'vs1.coursehunter.net',
     port: 443,
-    path: `/profit-redis-oipi/lesson${lessonNum}.mp4`,
+    path: `/pluralsight-redux-saga/lesson${lessonNum}.mp4`,
     method: 'GET',
     headers: {
       'Content-Type': 'video/mp4'
@@ -27,13 +27,13 @@ function run() {
   };
 
   const req = https.request(options, res => {
-    console.log(`statusCode: ${res.statusCode}`);
 
     if (res.statusCode === 404) {
       console.log('Dowloading finished!');
       return;
     }
 
+    console.log(`statusCode: ${res.statusCode}`);
     console.log(`Lesson number ${lessonNum} is processing`);
     const writeStream = fs.createWriteStream(`./${dir}/lesson${lessonNum}.mp4`);
 
